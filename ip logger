@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IP Logger (Ethical Example)</title>
+</head>
+<body>
+  <h1>Your IP Address</h1>
+  <p id="ip">Loading...</p>
+
+  <script>
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('ip').textContent = data.ip;
+
+        // Optional: send to your backend
+        fetch('https://your-server.com/log-ip', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ ip: data.ip })
+        });
+      });
+  </script>
+</body>
+</html>
