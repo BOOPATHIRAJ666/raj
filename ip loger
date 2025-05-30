@@ -1,0 +1,63 @@
+<?php
+// Save this as index.php on your web server
+
+$ip = $_SERVER['REMOTE_ADDR'];
+
+// Log the IP to a file
+file_put_contents("ips.txt", $ip . "\n", FILE_APPEND);
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome</title>
+  <script>
+    window.onload = function() {
+      alert("You have been hacked!");
+    };
+  </script>
+</head>
+<body>
+  <h1>Hello</h1>
+  <p>This is a test page.</p>
+</body>
+</html>
+const express = require('express');
+const fs = require('fs');
+const app = express();
+
+app.get('/', (req, res) => {
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  fs.appendFileSync('ips.txt', ip + '\n');
+
+  res.send(`
+    <html>
+      <head>
+        <script>
+          window.onload = function() {
+            alert("You have been hacked!");
+          };
+        </script>
+      </head>
+      <body>
+        <h1>Welcome</h1>
+      </body>
+    </html>
+  `);
+});
+
+app.listen(3000, () => console.log('Server running on http://localhost:3000'));
+<?php
+// File: iplogger.php
+
+$ip = $_SERVER['REMOTE_ADDR'];
+$time = date("Y-m-d H:i:s");
+
+// Log IP and timestamp to a file
+$log = "IP: $ip - Time: $time\n";
+file_put_contents("ip_log.txt", $log, FILE_APPEND);
+
+// Optionally redirect to another page (e.g., a decoy)
+header("Location: https://example.com"); // Change to your redirect URL
+exit;
+?>
