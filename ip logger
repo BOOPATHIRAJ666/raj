@@ -1,29 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>IP Logger (Ethical Example)</title>
+  <meta charset="UTF-8">
+  <title>IP Logger (with Consent)</title>
 </head>
 <body>
-  <h1>Your IP Address</h1>
-  <p id="ip">Loading...</p>
+  <h1>Welcome</h1>
+  <p>This site collects your IP address for analytics purposes. By continuing, you consent to this.</p>
 
   <script>
-    fetch('https://api.ipify.org?format=json')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('ip').textContent = data.ip;
-
-        // Optional: send to your backend
-        fetch('https://your-server.com/log-ip', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ ip: data.ip })
-        });
-      });
+    fetch("log_ip.php")
+      .then(response => response.text())
+      .then(data => console.log(data));
   </script>
 </body>
 </html>
